@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TELUS Digital Recommendations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    /* TELUS Digital brand: green is the only brand accent on telusdigital.com;
+       headings/CTAs use black, not purple. */
+    --green:#66CC00;
+    --green-dark:#3E7A00;
+    --green-light:#EAF7DA;
+    --black:#1A1A1A;
+    --obsidian:#1A1A2E;
+    --pearl:#F8F8F8;
+    --slate:#54595F;
+    --moonstone:#A0A8B0;
+    --galena:#3D3D3D;
+    --marble:#E8E8E8;
+    --amber:#B8860B;
+    --amber-bg:#FBF2DE;
+    --closed:#a93a3a;
+    --closed-bg:#fbe3e3;
+    --white:#ffffff;
+    /* legacy aliases so existing rules below keep working */
+    --green-900:var(--black);
+    --green-700:var(--green-dark);
+    --green-500:var(--green);
+    --green-100:var(--green-light);
+    --sand-50:var(--pearl);
+    --sand-100:var(--marble);
+    --ink-900:var(--obsidian);
+    --ink-600:var(--galena);
+    --ink-400:var(--moonstone);
+    --line:var(--marble);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--pearl);
+    color:var(--galena);
+    line-height:1.7;
+  }
+  ul li::marker{color:var(--green);}
+  header{
+    background:var(--white);
+    color:var(--obsidian);
+    padding:24px 32px 0;
+    border-bottom:3px solid var(--green);
+  }
+  .header-top{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .header-logo{flex:none;margin-top:2px;}
+  .eyebrow{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--green-dark);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  header h1{
+    margin:0 0 6px;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--obsidian);
+  }
+  header h1 span{color:var(--green-dark);}
+  header p{
+    margin:0 0 14px;
+    color:var(--slate);
+    font-size:16px;
+    font-weight:400;
+    max-width:680px;
+  }
+  .header-meta{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    padding-bottom:14px;
+    font-size:11px;
+    color:var(--moonstone);
+  }
+  .header-meta strong{color:var(--slate);font-weight:600;}
+  .controls{
+    max-width:1080px;
+    margin:0 auto;
+    padding:20px 32px 0;
+  }
+  .role-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .role-label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-400);
+    font-weight:600;
+  }
+  .pill{
+    border:1px solid var(--line);
+    background:var(--white);
+    color:var(--ink-600);
+    padding:7px 16px;
+    border-radius:999px;
+    font-size:14px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pill:hover{border-color:var(--green-500);}
+  .pill.active{
+    background:var(--green-700);
+    border-color:var(--green-700);
+    color:var(--white);
+  }
+  .city-row{
+    display:flex;
+    gap:4px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .city-tab{
+    padding:10px 18px;
+    font-size:14px;
+    color:var(--ink-600);
+    background:none;
+    border:none;
+    border-bottom:2px solid transparent;
+    cursor:pointer;
+    margin-bottom:-1px;
+  }
+  .city-tab.active{
+    color:var(--green-900);
+    border-bottom-color:var(--green-700);
+    font-weight:600;
+  }
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:24px 32px 60px;
+  }
+  .role-banner{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--green-100);
+    border:1px solid #cfe3d4;
+    color:var(--green-900);
+    padding:10px 16px;
+    border-radius:8px;
+    font-size:13.5px;
+    margin-bottom:24px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:16px;
+  }
+  section.block{
+    margin-bottom:32px;
+  }
+  section.block h2{
+    font-size:18px;
+    color:var(--black);
+    margin:0 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--green);
+    font-weight:700;
+  }
+  .subgroup{
+    margin-bottom:20px;
+  }
+  .subgroup:last-child{margin-bottom:0;}
+  .subgroup-label{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-weight:700;
+    color:var(--obsidian);
+    margin:0 0 10px;
+  }
+  details.dropdown-group{
+    margin-bottom:10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--white);
+    padding:2px 14px;
+  }
+  details.dropdown-group:last-child{margin-bottom:0;}
+  details.dropdown-group summary{
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+    color:var(--obsidian);
+    padding:10px 0;
+  }
+  details.dropdown-group summary:hover{color:var(--green-dark);}
+  details.dropdown-group summary .count{
+    font-weight:400;
+    color:var(--ink-400);
+    margin-left:4px;
+  }
+  details.dropdown-group .grid{
+    padding-bottom:14px;
+  }
+  details.dropdown-group .card{
+    border:none;
+    padding:0;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+  }
+  .card h3{
+    margin:0 0 6px;
+    font-size:15.5px;
+    color:var(--ink-900);
+  }
+  .card h3 a{color:inherit;}
+  .card .meta{
+    font-size:12.5px;
+    color:var(--ink-400);
+    margin-bottom:8px;
+  }
+  .card p{
+    margin:0 0 8px;
+    font-size:14px;
+    color:var(--ink-600);
+  }
+  .card p:last-child{margin-bottom:0;}
+  .card ul{
+    margin:0;
+    padding-left:18px;
+    font-size:13.5px;
+    color:var(--ink-600);
+  }
+  .card ul li{margin-bottom:5px;}
+  .card ul li:last-child{margin-bottom:0;}
+  .card a{color:var(--green-700);}
+  .tag{
+    display:inline-block;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:5px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+  .tag.sample{
+    background:var(--amber-bg);
+    color:var(--amber);
+  }
+  .tag.pick{
+    background:var(--green-100);
+    color:var(--green-700);
+  }
+  .tag.price{
+    background:var(--sand-100);
+    color:var(--ink-600);
+  }
+  .tag.closed{
+    background:#fbe3e3;
+    color:#a93a3a;
+  }
+  .contact-name{
+    font-weight:600;
+    color:var(--ink-900);
+  }
+  .note{
+    font-size:12.5px;
+    color:var(--ink-400);
+    margin-top:6px;
+    font-style:italic;
+  }
+  .empty{
+    font-size:13.5px;
+    color:var(--ink-400);
+    background:var(--sand-100);
+    border:1px dashed var(--line);
+    padding:14px 16px;
+    border-radius:8px;
+  }
+  .skip-card{
+    border-color:#e3c9a8;
+    background:#fdfaf5;
+  }
+  footer{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px 24px;
+  }
+  .footer-note{
+    font-size:10px;
+    line-height:1.6;
+    color:var(--moonstone);
+    margin:0 0 16px;
+  }
+  .footer-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    border-top:1px solid var(--marble);
+    padding-top:12px;
+    font-size:11px;
+    color:var(--moonstone);
+  }
+  .footer-bar .dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    margin-right:8px;
+    vertical-align:middle;
+  }
+  .footer-logo{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    vertical-align:middle;
+  }
+  .footer-logo svg{
+    flex:none;
+  }
+  .footer-wordmark{
+    font-weight:700;
+    color:var(--black);
+    letter-spacing:.01em;
+  }
+  .footer-wordmark span{
+    font-weight:400;
+    color:var(--moonstone);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <svg class="header-logo" width="34" height="34" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="#66CC00">
+        <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z"/>
+        <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(72 17 17)"/>
+        <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(144 17 17)"/>
+        <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(216 17 17)"/>
+        <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(288 17 17)"/>
+      </g>
+    </svg>
+    <div>
+      <p class="eyebrow">Office &amp; client resources</p>
+      <h1>TELUS Digital <span>Recommendations</span></h1>
+    </div>
+  </div>
+  <p>Hotels, restaurants, activities, and the people who can help &mdash; across all seven TELUS Digital offices, by who's asking. Contacts, addresses, and hotel/restaurant info come from current TELUS Digital wikis and travel docs; a few cards are still placeholders where a source list wasn't available.</p>
+  <div class="header-meta">
+    <span><strong>Author:</strong> Office Team</span>
+    <span><strong>Date:</strong> Thursday, July 9, 2026</span>
+    <span><strong>Version:</strong> v2</span>
+    <span><strong>Status:</strong> Draft / prototype</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="role-row">
+    <span class="role-label">Viewing as</span>
+    <button class="pill" data-set-role="staff">Staff</button>
+    <button class="pill" data-set-role="client">Client</button>
+    <button class="pill" data-set-role="vendor">Vendor / Partner</button>
+  </div>
+  <div class="city-row">
+    <button class="city-tab" data-set-city="cville">Charlottesville</button>
+    <button class="city-tab" data-set-city="columbus">Columbus</button>
+    <button class="city-tab" data-set-city="durham">Durham</button>
+    <button class="city-tab" data-set-city="boston">Boston</button>
+    <button class="city-tab" data-set-city="vancouver">Vancouver</button>
+    <button class="city-tab" data-set-city="brazil">Porto Alegre</button>
+    <button class="city-tab" data-set-city="saopaulo">S&atilde;o Paulo</button>
+  </div>
+</div>
+
+<main>
+
+  <div class="role-banner" data-role="staff">
+    Staff view: full contact list, meeting space details, catering process, hotel booking info, and budget/ticket guidance.
+  </div>
+  <div class="role-banner" data-role="client">
+    Client view: your visit contact, and recommended spots for dining, staying, and filling downtime.
+  </div>
+  <div class="role-banner" data-role="vendor">
+    Vendor &amp; partner view: who to coordinate with and how orders and deliveries get handled.
+  </div>
+
+  <!-- CONTACTS -->
+  <section class="block">
+    <h2>TELUS Digital Contact</h2>
+    <div class="grid">
+
+      <div class="card" data-city="cville">
+        <p class="meta">1835 Broadway St, Charlottesville, VA 22902 (Woolen Mills)</p>
+        <h3 data-role="staff client">On-site &amp; visit planning</h3>
+        <h3 data-role="vendor">Catering &amp; ops coordination</h3>
+        <p data-role="staff client"><span class="contact-name">Max Upton</span> (max.upton@telusdigital.com*) &amp; <span class="contact-name">Grace Trapnell</span> (grace.trapnell@telusdigital.com*) &mdash; office contacts for Charlottesville on-sites and client visits.</p>
+        <p data-role="staff vendor"><span class="contact-name">Priscilla</span> &amp; <span class="contact-name">Brett</span> &mdash; Woolen Mills Cafe team, for catering orders and delivery coordination. No email documented; they're Meriwether Godsey (vendor) staff, not on the TELUS Digital domain.</p>
+        <p data-role="staff"><span class="contact-name">Rijul Kochar</span> (rijul.kochar@telusdigital.com*) &mdash; Culture Lead, the one to loop in for office-specific event budget.</p>
+        <p data-role="staff"><span class="contact-name">Marissa Peterson</span> (marissa.peterson@telusdigital.com*) &mdash; handles all travel request tickets (auto-assigned in Jira).</p>
+      </div>
+
+      <div class="card" data-city="columbus">
+        <p class="meta">274 Marconi Blvd, Suite 300, Columbus, OH 43215</p>
+        <h3 data-role="staff client">On-site &amp; visit planning</h3>
+        <h3 data-role="vendor">Catering &amp; ops coordination</h3>
+        <p data-role="staff client vendor"><span class="contact-name">Kyle Jepson</span> (kyle.jepson@telusdigital.com*) &mdash; office manager for Columbus on-sites, client visits, and catering requests (needs at least 72 hours' notice for larger orders). Also the source for the restaurant recs below.</p>
+        <p data-role="staff"><span class="contact-name">Justin Bale</span> (justin.bale@telusdigital.com*) &mdash; Culture Lead, the one to loop in for office-specific event budget.</p>
+      </div>
+
+      <div class="card" data-city="durham">
+        <p class="meta">800 Taylor Street, Suite 300, Durham, NC 27701</p>
+        <h3 data-role="staff client">On-site &amp; visit planning</h3>
+        <h3 data-role="vendor">Catering &amp; ops coordination</h3>
+        <p data-role="staff client vendor"><span class="contact-name">Darian Duvallwood</span> (darian.duvallwood@telusdigital.com*) &mdash; office contact for Durham on-sites, client visits, and catering coordination (72 hours' notice for larger orders).</p>
+        <p data-role="staff"><span class="contact-name">Ryan Davis</span> (ryan.davis@telusdigital.com*) &mdash; Culture Lead, the one to loop in for office-specific event budget.</p>
+      </div>
+
+      <div class="card" data-city="boston">
+        <p class="meta">40 Cambridge St, Charlestown, MA 02129</p>
+        <h3 data-role="staff client">On-site &amp; visit planning</h3>
+        <h3 data-role="vendor">Catering &amp; ops coordination</h3>
+        <p data-role="staff client vendor"><span class="contact-name">Leslie Balbontin</span> (leslie.balbontin@telusdigital.com*) &mdash; office contact for Boston.</p>
+        <p data-role="staff"><span class="contact-name">Mark Van Der Hyde</span> (mark.vanderhyde@telusdigital.com*) &mdash; Culture Lead, the one to loop in for office-specific event budget.</p>
+        <p data-role="staff client">The office is staffed Tuesdays and Thursdays, with occasional coverage other days &mdash; worth confirming before a visit. Double-check the Charlestown address before booking a car; there's a similarly named Boston address that rideshare apps sometimes default to instead.</p>
+        <p class="note" data-role="staff">Room and catering details for Boston aren't documented in the current wiki export &mdash; worth adding once we have them.</p>
+      </div>
+
+      <div class="card" data-city="vancouver">
+        <p class="meta">510 W Georgia St, 9th Floor, Vancouver, BC V6B 0M3, Canada (TELUS Garden)</p>
+        <h3 data-role="staff client">On-site &amp; visit planning</h3>
+        <h3 data-role="vendor">Catering &amp; ops coordination</h3>
+        <p data-role="staff client"><span class="contact-name">Karla Carreras</span> (karla.carreras@telusdigital.com*) &mdash; Culture Lead; ping her on Slack for visitor/guest badge access.</p>
+        <p data-role="staff vendor"><span class="contact-name">Joseph Marzocco</span> (TELUS Real Estate Operations) &mdash; office manager, 1 604 307 0552, joseph.marzocco@telus.com.</p>
+        <p data-role="staff">This is a shared workspace with TELUS. Badges give 24/7 access to the suite, kitchen, and elevators; outside the TELUS Digital space, connect to the #TELUS WiFi network.</p>
+      </div>
+
+      <div class="card" data-city="brazil">
+        <p class="meta">Rua Dom Pedro II, 978, Higien&oacute;polis, Porto Alegre, RS, CEP 90550-141, Brazil</p>
+        <h3>On-site &amp; travel coordination</h3>
+        <p data-role="staff client"><span class="contact-name">Suelen Marquisio Dos Santos</span> (suelen.santos@telusdigital.com**) &mdash; office contact for Porto Alegre.</p>
+        <p data-role="staff"><span class="contact-name">Luis Eduardo Lanfredi</span> (luis.lanfredi@telusdigital.com**) &mdash; Culture Lead. Facilities support: facilities@poatek.com.</p>
+        <p data-role="vendor" class="empty" style="margin:0;">No dedicated vendor/ops contact documented for this location yet &mdash; use facilities@poatek.com.</p>
+      </div>
+
+      <div class="card" data-city="saopaulo">
+        <p class="meta">Edif&iacute;cio Panorama Paulista, Rua Minas Gerais 316, 7&ordm;&ndash;8&ordm; andares, S&atilde;o Paulo, SP, CEP 01244-010, Brazil</p>
+        <h3>On-site &amp; travel coordination</h3>
+        <p data-role="staff client"><span class="contact-name">Andrea Gutierres de Castro Poloniato</span> (andrea.poloniato@telusdigital.com**) &mdash; Office Ops Specialist for S&atilde;o Paulo.</p>
+        <p data-role="staff"><span class="contact-name">Andr&eacute; Bernardi</span> (andre.bernardi@telusdigital.com**) &mdash; Culture Lead. Facilities support: facilities@poatek.com.</p>
+        <p data-role="staff client" style="margin-top:6px;">Visiting? You'll need an access card and facial registration for the office door &mdash; request it ahead of time through facilities@poatek.com, then pick up the card from reception on arrival.</p>
+        <p data-role="vendor" class="empty" style="margin:0;">No dedicated vendor/ops contact documented for this location yet &mdash; use facilities@poatek.com.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MEETING SPACES (staff + client) -->
+  <section class="block" data-role="staff client">
+    <h2>Meeting Spaces</h2>
+
+    <div class="grid" data-city="cville">
+      <div class="card"><h3>Redwood</h3><p class="meta">Seats 40 with tables, 60+ chairs only</p><p data-role="staff">Flexible table/chair setup on wheels, large whiteboard, Zoom-capable. Booked through IT/Admin due to setup requirements.</p></div>
+      <div class="card"><h3>Sequoia</h3><p class="meta">Seats 20&ndash;25</p><p data-role="staff">One large table, whiteboard, Zoom room.</p></div>
+      <div class="card"><h3>4th floor open space</h3><p class="meta">Flexible capacity</p><p data-role="staff">Open, unbooked space &mdash; good for overflow or informal gathering.</p></div>
+    </div>
+
+    <div class="grid" data-city="columbus">
+      <div class="card"><h3>Hocking Hills</h3><p class="meta">Seats 20&ndash;25</p><p data-role="staff">Classroom or U-shape setup, chalkboards, TV only (no meeting portal), three smaller breakout rooms attached.</p></div>
+      <div class="card"><h3>The Scioto</h3><p class="meta">Seats 18&ndash;20</p><p data-role="staff">Fixed setup, whiteboard, Zoom room.</p></div>
+      <div class="card"><h3>The Arena</h3><p class="meta">Seats 15&ndash;18</p><p data-role="staff">Fixed setup, two whiteboards, Zoom room, credenzas for food and beverage.</p></div>
+    </div>
+
+    <div class="grid" data-city="durham">
+      <div class="card"><h3>Wisteria</h3><p class="meta">Seats 20</p><p data-role="staff">One large table, whiteboard, built-ins for breakfast/lunch placement, Zoom room.</p></div>
+      <div class="card"><h3>Basil</h3><p class="meta">Capacity not documented</p><p data-role="staff">Referenced in the wiki without further detail &mdash; confirm with Darian Duvallwood.</p></div>
+      <div class="card"><h3>Open Collab</h3><p class="meta">Seats 30&ndash;40</p><p data-role="staff">Large open space, not private. Multiple whiteboards, movable furniture. Largest private on-site Durham can host is 25.</p></div>
+    </div>
+
+    <div class="grid" data-city="boston">
+      <div class="card"><h3>Arctic</h3><p class="meta">Upper Level, capacity not documented</p><p data-role="staff">Largest and main conference room, behind the front desk. Two glass walls, so it's a fishbowl of a room. Best for large groups and client visits.</p></div>
+      <div class="card"><h3>Timber</h3><p class="meta">Upper Level, capacity not documented</p><p data-role="staff">Most private conference room, next to the front desk. Vinyl on the doors for extra privacy. Best for candidate interviews.</p></div>
+      <div class="card"><h3>Studio 5</h3><p class="meta">Lower Level, capacity not documented</p><p data-role="staff">More of a multifunctional call room than a full conference room. Lower Level rooms surround the common area.</p></div>
+    </div>
+    <p class="note" data-role="staff" style="margin-top:4px;">Studio 6 and Studio 7 (Lower Level) were still being built out as of the source wiki's last update; check with Leslie Balbontin on current status.</p>
+
+    <div class="grid" data-city="vancouver">
+      <div class="card"><h3>Tempura, Spicy Tuna, Volcano, Dynamite &amp; Dragon</h3><p class="meta">Five conference rooms, seats 6 each</p><p data-role="staff">Identical setup in each: TV screen, mic, speakers, Mac mini. Book through Google Calendar; most run through the Meeting Portal.</p></div>
+      <div class="card"><h3>Rainbow</h3><p class="meta">Seats 10</p><p data-role="staff">Largest conference room, with its own dedicated Crestron control panel. No HDMI input yet, so both TVs stay set to "Room PC." Camera is on auto-track.</p></div>
+      <div class="card"><h3>Bento Box</h3><p class="meta">All-hands space, 20+</p><p data-role="staff">TV screen, speakers, Mac mini/ChromeBox, and a digital whiteboard. Main building AV control panel is on the wall just outside Rainbow.</p></div>
+      <div class="card"><h3>Booths 01&ndash;06</h3><p class="meta">Private booths, 1 person each</p><p data-role="staff">For focused individual work, not for meetings.</p></div>
+    </div>
+    <p class="note" data-role="staff" style="margin-top:4px;">9th floor. See the <a href="https://willowtree.atlassian.net/wiki/spaces/OR/pages/2576613391" target="_blank" rel="noopener">Office Map</a> for room locations. TELUS Corporate Concierge can help book rooms outside the TELUS Digital suite if all 5 conference rooms are full.</p>
+
+    <div class="grid" data-city="brazil">
+      <div class="card"><h3>The Wall</h3><p class="meta">Seats 8, 9th floor</p><p data-role="staff">TV screen, Mac mini. Right side.</p></div>
+      <div class="card"><h3>The Shire</h3><p class="meta">Seats 6, 9th floor</p><p data-role="staff">TV screen, Mac mini. Left side.</p></div>
+      <div class="card"><h3>Pollos Hermanos</h3><p class="meta">Seats ~30, 10th floor</p><p data-role="staff">Conference room/all-hands space with a projector and Mac mini. Center of the floor, by the lobby.</p></div>
+      <div class="card"><h3>Upside Down</h3><p class="meta">Seats 6, 10th floor</p><p data-role="staff">TV screen, Mac mini. Left side.</p></div>
+      <div class="card"><h3>Azkaban</h3><p class="meta">Seats 7, 10th floor</p><p data-role="staff">Right side.</p></div>
+      <div class="card"><h3>Death Star</h3><p class="meta">Seats 6, 11th floor</p><p data-role="staff">TV screen, Mac mini. Right side.</p></div>
+      <div class="card"><h3>Enterprise</h3><p class="meta">Seats 6, 11th floor</p><p data-role="staff">TV screen, Mac mini. Left side.</p></div>
+    </div>
+    <p class="note" data-role="staff" style="margin-top:4px;">Rooms are named after movies and TV shows. See the <a href="https://willowtree.atlassian.net/wiki/spaces/WI/pages/119469979" target="_blank" rel="noopener">meeting-room scheduling guide</a> for how to book.</p>
+
+    <div class="grid" data-city="saopaulo">
+      <div class="card"><h3>Ada Lovelace</h3><p class="meta">Seats 10, 7th floor</p><p data-role="staff">TV screen. Left side of the floor.</p></div>
+      <div class="card"><h3>Alan Turing</h3><p class="meta">Seats 8, 7th floor</p><p data-role="staff">TV screen. Left side of the floor.</p></div>
+      <div class="card"><h3>Grace Hopper</h3><p class="meta">Seats 4, 7th floor</p><p data-role="staff">No AV devices. Left side of the floor.</p></div>
+      <div class="card"><h3>Martin Fowler</h3><p class="meta">Seats 16, 8th floor</p><p data-role="staff">Conference room/all-hands space with a retractable wall and TV screen. Right side, facing Paulista.</p></div>
+      <div class="card"><h3>Susan Kare</h3><p class="meta">Seats 6, 8th floor</p><p data-role="staff">TV screen. Left side, facing Pacaembu.</p></div>
+      <div class="card"><h3>John von Neumann</h3><p class="meta">Seats 6, 8th floor</p><p data-role="staff">TV screen. Right side, facing Pacaembu.</p></div>
+    </div>
+    <p class="note" data-role="staff" style="margin-top:4px;">Rooms are named after computing pioneers. See the <a href="https://willowtree.atlassian.net/wiki/spaces/WI/pages/119469979" target="_blank" rel="noopener">meeting-room scheduling guide</a> for how to book.</p>
+  </section>
+
+  <!-- FOOD & CATERING PROCESS -->
+  <section class="block">
+    <h2 data-role="staff">Catering &amp; Food Process</h2>
+    <h2 data-role="client">Dining During Your Visit</h2>
+    <h2 data-role="vendor">Order &amp; Delivery Logistics</h2>
+
+    <div class="card" data-city="cville">
+      <p data-role="staff">For groups of 20+, Woolen Mills Cafe can cater &mdash; loop in Priscilla or Brett and use the internal catering guide to budget. Cost center approval is required to expense a catered meal. Order-ahead options are posted daily in the #cville-woolen-mills Slack channel. Catered spreads are cleared after two hours for food safety.</p>
+      <p data-role="client">We're happy to arrange catered meals in-office, or book an off-site dinner for your visit &mdash; just let your TELUS Digital contact know your group size and any dietary needs.</p>
+      <p data-role="vendor">Larger orders (20+) route through the Woolen Mills Cafe team (Priscilla/Brett). Day-of menus post in an internal Slack channel; plan for setup/breakdown within a two-hour service window.</p>
+    </div>
+
+    <div class="card" data-city="columbus">
+      <p data-role="staff">Kyle can arrange catering for groups of 20+ with at least 72 hours' notice (cost center approval required). Smaller groups typically order via DoorDash, UberEats, or Grubhub; EZCater is the go-to for larger individual orders. See the catering picks below.</p>
+      <p data-role="client">Let us know your group size ahead of time and we'll sort out catering or a nearby restaurant reservation for your visit.</p>
+      <p data-role="vendor">Standing orders under 8 people run through DoorDash/UberEats/Grubhub; larger orders go through EZCater. Give Kyle Jepson at least 72 hours' notice for a catered meeting. Always specify building, floor, and suite on delivery orders, and never leave food at the door.</p>
+    </div>
+
+    <div class="card" data-city="durham">
+      <p data-role="staff">Darian can coordinate catering for groups of 12+ with 72 hours' notice (cost center approval required). Smaller or internal on-sites typically self-serve via ezCater (8+) or a DoorDash group order. Relish is also used here per the Vendor List sheet.</p>
+      <p data-role="client">Let us know your group size ahead of your visit and we'll arrange catering or a restaurant reservation.</p>
+      <p data-role="vendor">Orders of 8+ typically go through ezCater; smaller groups use DoorDash. Give Darian Duvallwood at least 72 hours' notice for larger requests.</p>
+    </div>
+
+    <div class="card" data-city="boston">
+      <p data-role="staff">No formal catering process is documented for Boston yet &mdash; check with Leslie Balbontin. EZCater and Relish are both listed as vendors used here in the Vendor List sheet.</p>
+      <p data-role="client">Let us know your group size ahead of your visit and we'll sort out catering or a restaurant.</p>
+      <p data-role="vendor">Coordinate directly with Leslie Balbontin for delivery timing and building access.</p>
+    </div>
+
+    <div class="card" data-city="vancouver">
+      <div class="empty">Catering process for Vancouver isn't documented yet.</div>
+    </div>
+
+    <div class="card" data-city="brazil">
+      <div class="empty">Catering process for Porto Alegre isn't documented yet.</div>
+    </div>
+
+    <div class="card" data-city="saopaulo">
+      <p data-role="staff client">There's a small caf&eacute; (Sterna Caf&eacute;) right at the building reception for quick meals and snacks.</p>
+      <p data-role="vendor" class="empty" style="margin:0;">No delivery/catering process documented for this location yet.</p>
+    </div>
+  </section>
+
+  <!-- RESTAURANTS -->
+  <section class="block" data-role="staff client">
+    <h2>Restaurant Recommendations</h2>
+
+    <div data-city="cville">
+      <div class="subgroup" data-role="client">
+        <p class="subgroup-label">A few good options &mdash; budget &amp; midrange</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.bodosbagels.com/" target="_blank">Bodo's Bagels</a><span class="tag price">$</span> &mdash; Bagels and breakfast; a C'ville institution.</li>
+              <li><a href="https://www.beerrun.com/" target="_blank">Beer Run</a><span class="tag price">$$</span> &mdash; American sandwiches, with a beer and wine shop attached.</li>
+              <li><a href="https://store.brazostacos.com/" target="_blank">Brazos Tacos</a><span class="tag price">$$</span> &mdash; Tacos with vegan options.</li>
+              <li><a href="http://www.gotdumplingsandtea.com/" target="_blank">Got Dumplings</a><span class="tag price">$$</span> &mdash; Boba tea, dumplings, and noodles, with vegan options.</li>
+              <li><a href="http://revolutionarysoup.com/" target="_blank">Revolutionary Soup</a><span class="tag price">$$</span> &mdash; Soup and sandwiches, with vegan options.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="client">
+        <p class="subgroup-label">A few good options &mdash; upscale dining</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.broadclothrestaurant.com/" target="_blank">Broadcloth</a><span class="tag price">$$$$</span> &mdash; New American, right next door to our Woolen Mills office.</li>
+              <li><a href="https://www.marudowntown.com/" target="_blank">Maru</a><span class="tag price">$$$</span> &mdash; Korean.</li>
+              <li><a href="https://tavolavino.com/" target="_blank">Tavola</a><span class="tag price">$$$$</span> &mdash; Italian, with an attached cocktail bar (Cicchetti Bar).</li>
+              <li><a href="https://www.smyrnacville.com/" target="_blank">Smyrna</a><span class="tag price">$$$$</span> &mdash; Mediterranean.</li>
+              <li><a href="https://thebebedero.com/" target="_blank">The Bebedero</a><span class="tag price">$$$</span> &mdash; Mexican.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" data-role="staff" style="margin-top:0;margin-bottom:14px;">Full directory below is from TELUS Digital's "Places to Eat (Cville)" wiki page. Join #cville-eats on Slack for the latest recommendations and news.</p>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Budget &amp; midrange (full list)</p>
+
+        <details class="dropdown-group">
+          <summary>Mexican &amp; Latin American<span class="count">(9)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.alcarbonva.com/" target="_blank">Al Carbon</a><span class="tag price">$$</span> &mdash; Mexican chicken.</li>
+            <li><a href="https://asadocville.com/" target="_blank">Asado</a><span class="tag price">$$</span> &mdash; Mexican and chicken wings.</li>
+            <li><a href="https://store.brazostacos.com/" target="_blank">Brazos Tacos</a><span class="tag pick">Client pick</span><span class="tag price">$$</span> &mdash; Tacos with vegan options; a second location is near UVA.</li>
+            <li><a href="https://www.facebook.com/cinemataco/" target="_blank">Cinema Taco</a><span class="tag price">$$</span> &mdash; Mexican.</li>
+            <li><a href="http://elpuertomexicancville.com" target="_blank">El Puerto</a><span class="tag price">$$</span> &mdash; Mexican.</li>
+            <li><a href="https://www.guadalajaramexicanva.com/" target="_blank">Guadalajara</a><span class="tag price">$$</span> &mdash; Mexican, with three more locations around town.</li>
+            <li><a href="http://guajiroscville.com" target="_blank">Guajiros Miami Eatery</a><span class="tag price">$$</span> &mdash; Cuban breakfast spot, good for brunch.</li>
+            <li><a href="https://tacosgomez.square.site/" target="_blank">Tacos Gomez</a><span class="tag price">$$</span> &mdash; Mexican.</li>
+            <li><a href="https://torchystacos.com/location/charlottesville/" target="_blank">Torchy's Tacos</a><span class="tag price">$$</span> &mdash; Tacos.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Burgers, pubs &amp; late night<span class="count">(7)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://boylanheights.co/" target="_blank">Boylan Heights</a><span class="tag price">$$</span> &mdash; Burgers and sports bar, open late.</li>
+            <li><a href="https://cvillebrightside.com/" target="_blank">Brightside</a><span class="tag price">$$</span> &mdash; Seafood and pub fare, open late.</li>
+            <li><a href="https://www.citizenburgerbarcville.com/" target="_blank">Citizen Burger</a><span class="tag price">$$</span> &mdash; Burgers.</li>
+            <li><a href="https://www.jackbrownsjoint.com/locations/charlottesville/" target="_blank">Jack Brown's</a><span class="tag price">$$</span> &mdash; Burgers and sports bar, open late.</li>
+            <li><a href="https://millersdowntown.com/" target="_blank">Miller's</a><span class="tag price">$$</span> &mdash; Pub fare, open late.</li>
+            <li><a href="https://www.facebook.com/p/Riverside-Lunch-100063719463428/" target="_blank">Riverside Lunch</a><span class="tag price">$$</span> &mdash; Burgers, sandwiches, and hot dogs.</li>
+            <li><a href="https://www.thespotuva.com/" target="_blank">The Spot</a><span class="tag price">$$</span> &mdash; Burgers, open late; a longtime fixture on the UVA "Corner."</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Asian<span class="count">(7)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.newasianexpress.com/" target="_blank">Asian Express</a><span class="tag price">$$</span> &mdash; Chinese and Japanese.</li>
+            <li><a href="http://www.gotdumplingsandtea.com/" target="_blank">Got Dumplings</a><span class="tag pick">Client pick</span><span class="tag price">$$</span> &mdash; Boba tea, dumplings, and noodles, with vegan options.</li>
+            <li><a href="https://www.marcoandluca.com/" target="_blank">Marco &amp; Luca</a><span class="tag price">$</span> &mdash; Dumplings and noodles, with two more locations around town.</li>
+            <li><a href="https://www.hawaiianfoodcville.com/" target="_blank">Mochiko</a><span class="tag price">$$</span> &mdash; Hawaiian, Japanese curry, and poke.</li>
+            <li><a href="http://www.monsoonsiamcville.com" target="_blank">Monsoon Siam</a><span class="tag price">$$</span> &mdash; Thai.</li>
+            <li><a href="https://thaifreshva.wixsite.com/website" target="_blank">Thai Fresh</a><span class="tag price">$$</span> &mdash; Thai.</li>
+            <li><a href="https://www.vunoodles.com/" target="_blank">Vu Noodles</a><span class="tag price">$$</span> &mdash; Banh mi, noodles, and Vietnamese dishes.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Mediterranean, Turkish &amp; kebabs<span class="count">(5)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.overthericeusa.com/" target="_blank">Box'd Kitchen</a><span class="tag price">$$</span> &mdash; Mediterranean.</li>
+            <li><a href="https://mezeh.com/" target="_blank">Mezeh Mediterranean Grill</a><span class="tag price">$$</span> &mdash; Mediterranean.</li>
+            <li><a href="https://otto-cville.com/" target="_blank">Otto Turkish Street Food</a><span class="tag price">$$</span> &mdash; Turkish, with vegan options.</li>
+            <li><a href="http://www.stickskebobshop.com" target="_blank">Sticks</a><span class="tag price">$$</span> &mdash; Kebabs, salads, and wraps.</li>
+            <li><a href="https://sultankebabcville.com/" target="_blank">Sultan Kebab</a><span class="tag price">$$</span> &mdash; Kebabs.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Southern, BBQ &amp; diners<span class="count">(5)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.facebook.com/AceBiscuitBbq/" target="_blank">Ace Biscuit &amp; Barbecue</a><span class="tag price">$$</span> &mdash; BBQ, breakfast, and soul food.</li>
+            <li><a href="https://mission-bbq.com/locations-and-menu/charlottesville-va/" target="_blank">Mission BBQ</a><span class="tag price">$$</span> &mdash; BBQ.</li>
+            <li><a href="http://thewhiskeyjarcville.com/" target="_blank">The Whiskey Jar</a><span class="tag price">$$</span> &mdash; Southern.</li>
+            <li><a href="https://tiptoprestaurant.com/" target="_blank">Tip Top Restaurant</a><span class="tag price">$$</span> &mdash; Diner.</li>
+            <li><a href="http://www.waysidechicken.com/internet/" target="_blank">Wayside Takeout &amp; Catering</a><span class="tag price">$$</span> &mdash; Fried chicken.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Breakfast, bagels &amp; bakeries<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.bodosbagels.com/" target="_blank">Bodo's Bagels</a><span class="tag pick">Client pick</span><span class="tag price">$</span> &mdash; Bagels and breakfast; a C'ville institution, with two other locations around town.</li>
+            <li><a href="https://www.chickadeecville.com/" target="_blank">Chickadee</a><span class="tag price">$$</span> &mdash; Breakfast and brunch; sandwiches on homemade brioche.</li>
+            <li><a href="https://www.mariebette.com/" target="_blank">MarieBette</a><span class="tag price">$$</span> &mdash; Breakfast, baked goods, and sandwiches.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Sandwiches &amp; delis<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.baggbys.com/" target="_blank">Baggbys</a><span class="tag price">$$</span> &mdash; Deli sandwiches.</li>
+            <li><a href="https://www.beerrun.com/" target="_blank">Beer Run</a><span class="tag pick">Client pick</span><span class="tag price">$$</span> &mdash; American sandwiches, with a beer and wine shop attached.</li>
+            <li><a href="https://www.stockprovisions.com/" target="_blank">JM Stock Provisions</a><span class="tag price">$$</span> &mdash; Butcher shop and sandwiches; known for ham biscuits.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Pizza<span class="count">(2)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.orderchristianspizza.com/" target="_blank">Christian's Pizza</a><span class="tag price">$</span> &mdash; Pizza.</li>
+            <li><a href="https://www.drhoshumblepie.com/" target="_blank">Dr. Ho's Humble Pie</a><span class="tag price">$$</span> &mdash; Pizza, salads, and sandwiches; a bit outside town but worth the drive.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Soups, salads &amp; food halls<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.dairymarketcville.com/" target="_blank">Dairy Market Food Hall</a><span class="tag price">$$</span> &mdash; Food hall with a mix of vendors.</li>
+            <li><a href="http://revolutionarysoup.com/" target="_blank">Revolutionary Soup</a><span class="tag pick">Client pick</span><span class="tag price">$$</span> &mdash; Soup and sandwiches, with vegan options; the spicy peanut tofu soup gets recommended a lot.</li>
+            <li><a href="https://www.rootsnaturalkitchen.com/" target="_blank">Roots Natural Kitchen</a><span class="tag price">$$</span> &mdash; Build-your-own bowls and salads.</li>
+          </ul></div></div>
+        </details>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Upscale dining (full list)</p>
+
+        <details class="dropdown-group">
+          <summary>American, steakhouse &amp; seafood<span class="count">(6)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.aberdeenbarn.com/" target="_blank">Aberdeen Barn</a><span class="tag price">$$$$</span> &mdash; Steakhouse.</li>
+            <li><a href="https://www.broadclothrestaurant.com/" target="_blank">Broadcloth</a><span class="tag pick">Client pick</span><span class="tag price">$$$$</span> &mdash; New American, right next door to our Woolen Mills office.</li>
+            <li><a href="https://www.ivyinnrestaurant.com/" target="_blank">Ivy Inn</a><span class="tag price">$$$$</span> &mdash; American.</li>
+            <li><a href="https://www.oakhartsocial.com/" target="_blank">Oakhart Social</a><span class="tag price">$$$$</span> &mdash; New American; has a private dining room.</li>
+            <li><a href="https://www.publicfo.com/" target="_blank">Public Fish &amp; Oyster</a><span class="tag price">$$$$</span> &mdash; Seafood.</li>
+            <li><a href="https://thelocal-cville.com/" target="_blank">The Local</a><span class="tag price">$$$</span> &mdash; American; has a private dining room.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>French<span class="count">(5)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.bizoudowntown.com/home" target="_blank">Bizou</a><span class="tag price">$$$</span> &mdash; French bistro.</li>
+            <li><a href="https://www.cafefrankcville.com/" target="_blank">Caf&eacute; Frank</a><span class="tag price">$$$$</span> &mdash; French.</li>
+            <li><a href="https://www.fleurierestaurant.com/" target="_blank">Fleurie</a><span class="tag price">$$$$</span> &mdash; French.</li>
+            <li><a href="https://www.petitpoisrestaurant.com/" target="_blank">Petit Pois</a><span class="tag price">$$$</span> &mdash; French.</li>
+            <li><a href="https://alleylight.com/" target="_blank">The Alley Light</a><span class="tag price">$$$$</span> &mdash; French, small plates.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Asian<span class="count">(4)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.bangrestaurant.net/" target="_blank">Bang!</a><span class="tag price">$$$</span> &mdash; Asian fusion and tapas, with vegan options; only takes reservations for parties of 8+.</li>
+            <li><a href="https://www.marudowntown.com/" target="_blank">Maru</a><span class="tag pick">Client pick</span><span class="tag price">$$$</span> &mdash; Korean.</li>
+            <li><a href="https://nowandzencville.square.site/" target="_blank">Now &amp; Zen</a><span class="tag price">$$$</span> &mdash; Sushi.</li>
+            <li><a href="https://ten-sushi.com/" target="_blank">Ten</a><span class="tag price">$$$$</span> &mdash; Sushi.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Italian &amp; pizza<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.lampopizza.com/" target="_blank">Lampo</a><span class="tag price">$$$</span> &mdash; Neapolitan pizza.</li>
+            <li><a href="http://orzokitchen.com/" target="_blank">Orzo Kitchen &amp; Wine Bar</a><span class="tag price">$$$</span> &mdash; Italian; has a private dining room.</li>
+            <li><a href="https://tavolavino.com/" target="_blank">Tavola</a><span class="tag pick">Client pick</span><span class="tag price">$$$$</span> &mdash; Italian, with an attached cocktail bar (Cicchetti Bar).</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Mexican &amp; Latin American<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.visitcharlottesville.org/directory/conmole/" target="_blank">Conmol&eacute;</a><span class="tag price">$$$</span> &mdash; Mexican, Oaxacan; known for the owner's family mol&eacute; recipes.</li>
+            <li><a href="https://thebebedero.com/" target="_blank">The Bebedero</a><span class="tag pick">Client pick</span><span class="tag price">$$$</span> &mdash; Mexican.</li>
+            <li><a href="https://www.zocalo-restaurant.com/" target="_blank">Zocalo</a><span class="tag price">$$$</span> &mdash; Latin American, open late.</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Tapas &amp; Mediterranean<span class="count">(2)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.mastapas.com/" target="_blank">Mas Tapas</a><span class="tag price">$$$$</span> &mdash; Tapas.</li>
+            <li><a href="https://www.smyrnacville.com/" target="_blank">Smyrna</a><span class="tag pick">Client pick</span><span class="tag price">$$$$</span> &mdash; Mediterranean.</li>
+          </ul></div></div>
+        </details>
+      </div>
+    </div>
+
+    <div data-city="columbus">
+      <div class="subgroup" data-role="staff client">
+        <p class="subgroup-label">Dinner &mdash; German Village</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.lindeys.com/" target="_blank">Lindey's</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$$</span> &mdash; New American restaurant serving steaks, seafood, and burgers; patio is first come, first served.</li>
+              <li><a href="https://barcelonacolumbus.com/events/private-parties/" target="_blank">Barcelona</a><span class="tag price">$$</span> &mdash; Spanish restaurant serving tapas, paella, and steak dishes with a full bar; private parties available.</li>
+              <li><a href="http://www.southvillagegrille.com/menu/" target="_blank">South Village Grille</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; New American restaurant serving pizza, steaks, seafood, and brunch dishes.</li>
+              <li><a href="http://www.eatchapmans.com/" target="_blank">Chapman's Eat Market</a><span class="tag closed">Closed</span> &mdash; Closed permanently in August 2025 after its lease expired; leaving here as a note so it doesn't get re-added.</li>
+              <li><a href="http://www.sycamoregv.com/" target="_blank">Sycamore</a><span class="tag price">$$$</span> &mdash; American restaurant serving seasonal, locally sourced small plates for breakfast, lunch, and dinner.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="staff client">
+        <p class="subgroup-label">Dinner &mdash; Downtown / Short North</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.sidebarcolumbus.com/" target="_blank">Sidebar</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; Serves Spanish and South American-inspired tapas and pre-prohibition style cocktails downtown.</li>
+              <li><a href="https://www.wolfsridgebrewing.com/dining-room" target="_blank">Wolf's Ridge Brewing</a><span class="tag price">$$</span> &mdash; Brewery and restaurant serving American pub food, pizza, and house-brewed craft beer.</li>
+              <li><a href="https://thepearlcolumbus.com/group-dining/" target="_blank">The Pearl</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; Gastropub and oyster bar with seafood and craft cocktails; the go-to, people love this place.</li>
+              <li><a href="https://theguildhousecolumbus.com/" target="_blank">The Guild House</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$$</span> &mdash; New American restaurant serving breakfast, lunch, and dinner with steak and seafood dishes.</li>
+              <li><a href="http://www.tiptopcolumbus.com/" target="_blank">TipTop</a><span class="tag price">$$</span> &mdash; Serves Ohio comfort food like sandwiches, pot roast, and blackened tilapia; pub grub, dive bar feel.</li>
+              <li><a href="http://www.rishicolumbus.com/" target="_blank">Rishi Sushi</a><span class="tag closed">Closed</span> &mdash; Downtown location closed January 2026; no new location has opened as of this writing.</li>
+              <li><a href="http://basi-italia.com/" target="_blank">Basi Italia</a><span class="tag price">$$$</span> &mdash; Italian restaurant serving pasta and Mediterranean-influenced entrees near downtown.</li>
+              <li><a href="https://butcherandrose.com/" target="_blank">Butcher &amp; Rose</a><span class="tag price">$$$$</span> &mdash; Steakhouse serving prime cuts, seafood, handmade pasta, and raw bar items downtown.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Bars &amp; cocktails</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.hausfrauhaven.com/" target="_blank">The Laundry</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; German Village wine bar with small plates; open Thu&ndash;Sat, 4&ndash;9pm only.</li>
+              <li><a href="https://www.fyrshortnorth.com/menu" target="_blank">FYR</a><span class="tag price">$$$$</span> &mdash; Live-fire steakhouse bar inside the Hilton Columbus Downtown serving Wagyu and dry-aged cuts.</li>
+              <li><a href="https://marcellasrestaurant.com/locations-menus/marcellas-short-north/menus/" target="_blank">Marcella's</a><span class="tag price">$$</span> &mdash; Italian restaurant with a bar and cocktail lounge serving pizzas, pastas, and small plates.</li>
+              <li><a href="https://www.wineonhigh.com/" target="_blank">Wine on High</a><span class="tag price">$$</span> &mdash; Short North wine bar offering wine by the glass, cocktails, cheese boards, and pizzas.</li>
+              <li><a href="https://www.thecitizenstrust.com/" target="_blank">The Citizens Trust</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; Cocktail lounge above Veritas serving craft old fashioneds, wine, and bar snacks.</li>
+              <li><a href="http://www.buckeyebourbonhouse.com/" target="_blank">Buckeye Bourbon House</a><span class="tag price">$$</span> &mdash; Bourbon-focused bar inside the Residence Inn offering over 300 spirits and flatbreads.</li>
+              <li><a href="https://martinimodernitalian.com/menus/cocktail-list/" target="_blank">Martini</a><span class="tag price">$$$</span> &mdash; Cameron Mitchell restaurant serving antipasto, pasta, veal, and a dedicated cocktail list.</li>
+              <li><a href="https://www.lawbirdbar.com/" target="_blank">Law Bird</a><span class="tag price">$$</span> &mdash; Brewery District cocktail and wine bar serving seasonal cocktails, sake, and shareable snacks.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Walkable lunch near the office</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li><a href="https://www.brassicas.com/menu" target="_blank">Brassica</a><span class="tag price">$$</span> &mdash; Mediterranean sandwich and salad restaurant with multiple Columbus locations including Short North.</li>
+              <li><a href="https://northmarket.org/" target="_blank">North Market</a><span class="tag pick">Kyle's pick</span><span class="tag price">$</span> &mdash; Market hall with 30+ independent food vendors; 7-minute walk from the office.</li>
+              <li><a href="https://hotchickentakeover.com/find-us/columbus/north-market/" target="_blank">Hot Chicken Takeover</a><span class="tag closed">Closed</span> &mdash; All Columbus locations closed by September 2025.</li>
+              <li><a href="https://warios-beef-and-pork.business.site/" target="_blank">Warios</a><span class="tag price">$$</span> &mdash; Walk-up shop serving Philly-style cheesesteaks and East Coast deli sandwiches, right next to the office.</li>
+              <li><a href="https://moransbarandgrille.com/" target="_blank">Moran's Bar &amp; Grill</a><span class="tag price">$$</span> &mdash; American bar and grill serving burgers, sandwiches, salads, and pasta entrees.</li>
+              <li><a href="https://sisenor-columbus.com/" target="_blank">Si Senor</a><span class="tag price">$</span> &mdash; Peruvian sandwich shop serving empanadas, roasted meats, and Latin American dishes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Catering &amp; delivery</p>
+
+        <details class="dropdown-group">
+          <summary>Caterers &amp; delivery marketplaces<span class="count">(4)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://cateringbymilos.com/" target="_blank">Milo's Catering</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; Full-service catering company offering buffet, drop-off, and event catering; good for larger events.</li>
+            <li>EZCater<span class="tag pick">Kyle's pick</span> &mdash; Catering marketplace, good for staying in budget and trying new cuisines.</li>
+            <li>Relish &mdash; catering vendor also used in Boston and Durham.</li>
+            <li>DoorDash, UberEats, GrubHub &mdash; fine for a one-off meal</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Bowls &amp; poke<span class="count">(3)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.rootsnaturalkitchen.com/catering/" target="_blank">Roots Natural Kitchen</a><span class="tag pick">Kyle's pick</span><span class="tag price">$</span> &mdash; Fast-casual restaurant serving customizable salads and grain bowls.</li>
+            <li><a href="https://bibibop.com/catering/" target="_blank">Bibibop</a><span class="tag price">$</span> &mdash; Fast-casual chain serving Korean-inspired rice and noodle bowls; gluten-free friendly.</li>
+            <li><a href="https://haipoke.com/" target="_blank">Hai Poke</a><span class="tag pick">Kyle's pick</span><span class="tag price">$</span> &mdash; Serves Hawaiian-style poke and sushi bowls (now via North Market Bridge Park and a food truck).</li>
+          </ul></div></div>
+        </details>
+
+        <details class="dropdown-group">
+          <summary>Sandwiches, cafes &amp; quick bites<span class="count">(5)</span></summary>
+          <div class="grid"><div class="card"><ul>
+            <li><a href="https://www.chocolatecafecolumbus.com/" target="_blank">Chocolate Cafe</a><span class="tag pick">Kyle's pick</span><span class="tag price">$$</span> &mdash; Cafe serving sandwiches, salads, soups, and desserts; gluten-free friendly.</li>
+            <li><a href="https://potbelly.com/catering" target="_blank">Potbelly Sandwich Works</a><span class="tag price">$</span> &mdash; Sandwich chain serving toasted subs, soups, and salads.</li>
+            <li><a href="https://www.sunnystreetcafe.com/" target="_blank">Sunny Street Cafe</a><span class="tag price">$</span> &mdash; Breakfast and lunch chain serving pancakes, omelets, and sandwiches; good for boxed breakfasts.</li>
+            <li><a href="https://www.pitabilities.com/catering" target="_blank">Pitabilities</a><span class="tag pick">Kyle's pick</span><span class="tag price">$</span> &mdash; Food truck and Hilliard restaurant serving made-to-order pita sandwiches, salads, and fries.</li>
+            <li><a href="https://mypiada.com/catering-menu" target="_blank">Piada</a><span class="tag pick">Kyle's pick</span><span class="tag price">$</span> &mdash; Fast-casual chain serving build-your-own Italian pastas, salads, and grilled flatbread wraps.</li>
+          </ul></div></div>
+        </details>
+
+        <p class="note">Delivery note: always specify building, floor, and suite (e.g. "4th floor, Suite 400"). Don't leave food at the door.</p>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Places to skip</p>
+        <div class="grid">
+          <div class="card skip-card">
+            <ul>
+              <li><a href="https://www.applespice.com/locations/ohio/columbus/" target="_blank">Apple Spice</a><span class="tag price">$</span> &mdash; Corporate catering company delivering boxed lunches, sandwiches, salads, and hot entrees.</li>
+              <li><a href="https://cleaneatz.com/" target="_blank">Clean Eatz</a><span class="tag price">$$</span> &mdash; Chain offering prepared healthy meals, smoothies, and grab-and-go food.</li>
+              <li><a href="https://olivetreecolumbus.com/" target="_blank">Olive Tree Med</a><span class="tag price">$$</span> &mdash; Mediterranean/Lebanese cafe serving falafel, moussaka, and lamb dishes; good food, unreliable delivery.</li>
+              <li><a href="https://dirtyfranks.com/" target="_blank">Dirty Franks</a><span class="tag price">$</span> &mdash; Downtown restaurant serving dozens of hot dog varieties; delivery experience hasn't been great.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-city="durham">
+      <div class="grid">
+        <div class="card"><h3>Add restaurant name<span class="tag sample">Sample</span></h3><p class="meta">Good for client dinners</p><p>The Durham wiki references a "Restaurant + Catering Recs" doc that isn't shared here yet &mdash; send it over and this card gets replaced with the real names.</p></div>
+      </div>
+    </div>
+
+    <div data-city="boston">
+      <div class="subgroup">
+        <p class="subgroup-label">Bakeries &amp; sweets</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li>Caked &mdash; 196 Quincy St, Boston; custom cupcakes and cakes.</li>
+              <li>Cookies By Design &mdash; Needham Heights; cookie arrangements and gift boxes.</li>
+              <li>Wicked Baked Cookies by Pauli's &mdash; large, stuffed cookies.</li>
+            </ul>
+            <p class="note">From the Vendor List sheet, no full restaurant list documented for Boston yet beyond these.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-city="vancouver">
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><a href="https://honeydoughnuts.com/" target="_blank">Honey Doughnuts</a> &mdash; doughnut shop in Deep Cove.</li>
+            <li><a href="https://vijs.ca/" target="_blank">Vij's</a> &mdash; Indian, on Cambie Street.</li>
+            <li><a href="https://www.bunchacahoangyen.com/" target="_blank">Bun Cha Ca Hoang Yen</a> &mdash; Vietnamese, East Vancouver on Victoria Drive.</li>
+            <li>Indian Fusion &mdash; North Shore.</li>
+            <li><a href="http://rainorshineicecream.com/" target="_blank">Rain or Shine Ice Cream</a> &mdash; several locations, mostly the west side.</li>
+            <li><a href="https://www.leesdonuts.ca/" target="_blank">Lee's Donuts</a> &mdash; Granville Island Market.</li>
+          </ul>
+          <p class="note">Passed along from a TD Canada Trust banker's recommendations to a TELUS Digital staffer, not a TELUS Digital-vetted list &mdash; skews toward doughnuts and casual spots rather than client dinners. Worth building out a proper client-dinner list for Vancouver.</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-city="brazil">
+      <div class="grid"><div class="empty">No restaurant recommendations documented for Porto Alegre yet.</div></div>
+    </div>
+
+    <div data-city="saopaulo">
+      <div class="subgroup">
+        <p class="subgroup-label">Near the office (walking distance)</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li>Riviera Restaurant &mdash; 170m away; TELUS Digital gets a 10% discount.</li>
+              <li>Jabuticaba Gastronomia &mdash; 270m away.</li>
+              <li>Dona J&uacute;lia &mdash; 250m away.</li>
+              <li>Villa Ang&eacute;lica &mdash; 550m away; TELUS Digital gets a 5% discount.</li>
+              <li>Padaria Bella Paulista &mdash; bakery, 700m away.</li>
+              <li>Manai Gastronomia &mdash; 750m away.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup" data-role="staff">
+        <p class="subgroup-label">Quick bites</p>
+        <div class="grid">
+          <div class="card">
+            <ul>
+              <li>Sterna Caf&eacute; &mdash; quick meals and snacks, right at the Ed. Panorama reception.</li>
+              <li>Frutaria Paulista &mdash; sandwiches, juices, and fruit, just outside the building.</li>
+              <li>Burdog &mdash; 350m away.</li>
+            </ul>
+            <p class="note">Nearest drugstore: Drogaria S&atilde;o Paulo, Av. Paulista 2.371 (800m).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOTELS -->
+  <section class="block" data-role="staff client">
+    <h2>Hotel Recommendations</h2>
+
+    <div class="grid" data-city="cville">
+      <div class="card">
+        <h3><a href="https://www.quirkhotels.com/hotels/charlottesville" target="_blank">The Doyle Hotel</a> <span class="meta" style="margin:0;">(formerly Quirk Hotel)</span></h3>
+        <p class="meta">499 W Main St &middot; ~$180/night + tax &middot; best for major clients &amp; candidates</p>
+        <p data-role="client">A short walk to the Downtown Mall, close to several local restaurants, with a rooftop bar and its own restaurant and cafe. About a 10-minute drive from our office. Our rate includes WiFi; parking is valet only.</p>
+        <p data-role="staff">Recently renamed from Quirk Hotel under new management. Book via the <a href="https://be.synxis.com/?Hotel=38325&amp;Chain=29423&amp;promo=WillowTree" target="_blank">direct booking link</a>; use code <strong>WOTR22</strong> if it doesn't auto-apply. Main contact: Tracy Uphold. Parking is valet and billed to the guest's card unless arranged otherwise. Breakfast is available at an extra charge.</p>
+      </div>
+      <div class="card">
+        <h3><a href="http://www.marriott.com/chowr" target="_blank">Residence Inn Charlottesville Downtown</a></h3>
+        <p class="meta">315 W Main St &middot; ~$179/night (King Studio) + tax &middot; good for extended stays</p>
+        <p data-role="client">Across the street from the Downtown Mall, with kitchen-equipped rooms and grocery delivery available, a good fit for longer stays. About a 10-minute drive from our office. Rate includes breakfast and WiFi.</p>
+        <p data-role="staff">Book with code <strong>F8C</strong>. On-site parking is $15/night. Bill to the company card by emailing the front desk (ricvilledowntown@gmail.com) with the confirmation number. Contacts: GM Regina Dodd, Director of Sales Debbie Kaplan, Sales Coordinator Deana Nowell.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://www.omnihotels.com/hotels/charlottesville" target="_blank">Omni Hotel</a></h3>
+        <p class="meta">212 Ridge McIntire Rd &middot; ~$179/night + tax</p>
+        <p data-role="client">Right on the Downtown Mall, close to coffee shops, restaurants, and bars. About a 10-minute drive from our office. Free parking and WiFi included.</p>
+        <p data-role="staff">Book via the <a href="https://www.omnihotels.com/hotels/charlottesville/corporate-rates/willowtree-apps" target="_blank">corporate rate link</a>, code <strong>45192429627</strong>. Group block contact: Colleen Trotter. Catering/convention contact: Sara Wanderlingh.</p>
+      </div>
+    </div>
+
+    <div class="grid" data-city="columbus">
+      <div class="card">
+        <h3><a href="https://www.hotellevequecolumbus.com/" target="_blank">Hotel LeVeque</a></h3>
+        <p class="meta">50 W Broad St &middot; ~$229/night &middot; upscale, best for execs &amp; candidates</p>
+        <p data-role="client">An upscale option in the historic LeVeque Tower, in the heart of downtown.</p>
+        <p data-role="staff">Book with code <strong>F8C</strong>. Contact: Adam Kowaleski.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://www.hilton.com/en/hotels/cmhdwhh-hilton-columbus-downtown/" target="_blank">Hilton Columbus Downtown</a></h3>
+        <p class="meta">402 North High St &middot; ~$224+/night &middot; upscale, best for execs &amp; candidates</p>
+        <p data-role="staff">Self-parking $38/day or valet $35/day. Contact: melissa.king2@hilton.com.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://thejuntohotel.com/" target="_blank">The Junto</a></h3>
+        <p class="meta">77 Belle St &middot; ~$199/night &middot; boutique, good for any guest</p>
+        <p data-role="client">A boutique hotel downtown, a good fit for most visits.</p>
+        <p data-role="staff">Promo waives the $20 amenity fee and takes 30% off suites. Contact: Jennifer Myers.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://www.marriott.com/en-us/hotels/cmhrd-residence-inn-columbus-downtown/overview/" target="_blank">Residence Inn Downtown Columbus</a></h3>
+        <p class="meta">36 E Gay St &middot; ~$162/night</p>
+        <p data-role="client">Kitchen-equipped rooms downtown, with a full hot breakfast buffet included.</p>
+        <p data-role="staff">Book with code <strong>F8C</strong>. Contact: Patty Frair. Full gym access next door; valet parking $30/day.</p>
+      </div>
+      <div class="card skip-card" data-role="staff">
+        <h3>Also available, no corporate rate</h3>
+        <p>Le M&eacute;ridien Columbus (The Joseph), Renaissance Columbus Downtown, Hyatt Regency Columbus &mdash; fine backups if the above are sold out.</p>
+        <p class="note">Feedback flagged the Marriott Courtyard Downtown as rough despite its online rating &mdash; worth avoiding.</p>
+      </div>
+    </div>
+
+    <div class="grid" data-city="durham">
+      <div class="card">
+        <h3><a href="https://www.marriott.com/hotels/travel/rduld-aloft-durham-downtown/" target="_blank">Aloft Durham Downtown</a></h3>
+        <p class="meta">345 Blackwell St &middot; ~$150&ndash;199/night</p>
+        <p data-role="client">Near the American Tobacco Campus, the Durham Bulls ballpark, and DPAC. About a 10-minute drive from our Golden Belt office. Parking is $10/night in the attached deck; WiFi is complimentary.</p>
+        <p data-role="staff">Book with code <strong>F8C</strong>. Contacts: Kay Hess and Kevin Madejczyk. For CC authorization, email Kay Hess and Jenn Watson the confirmation number to bill the TELUS Digital card. Small on-site gym.</p>
+      </div>
+      <div class="card">
+        <h3><a href="http://www.21cmuseumhotels.com/durham/" target="_blank">21c Museum Hotel</a></h3>
+        <p class="meta">111 Corcoran St &middot; ~$149&ndash;175/night (Deluxe King)</p>
+        <p data-role="client">A boutique hotel and art museum in one, a short walk to the American Tobacco Campus and nearby restaurants. About a 10-minute drive from our office.</p>
+        <p data-role="staff">Booking needs both a client code (<strong>SCP2035385</strong>) and access code (<strong>WI556US231</strong>). Contact: Alyssa Beranek (sales) or Michael Ryan (GM). Valet parking $15/night.</p>
+      </div>
+      <div class="card skip-card" data-role="staff">
+        <h3>Backups, no corporate rate</h3>
+        <p>The Durham Hotel, Durham Marriott City Center, and Springhill Suites Durham City View (705 S Mangum St) are fine downtown options if the above are sold out &mdash; a paper credit card authorization is needed if the traveler doesn't have a TELUS Digital card.</p>
+        <p class="note">Avoid Unscripted Durham &mdash; rooms open directly to a shared pool.</p>
+      </div>
+    </div>
+
+    <div class="grid" data-city="boston">
+      <div class="card">
+        <h3><a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1649961067883&amp;key=CORP&amp;app=resvlink" target="_blank">The Row Hotel at Assembly Row</a></h3>
+        <p class="meta">360 Foley Street, Somerville &middot; ~11% off standard rate</p>
+        <p data-role="client">Near Assembly Row's shops and restaurants, with a restaurant, bar, and lounge on site.</p>
+        <p data-role="staff">Contact: Elise Warshaver. Complimentary WiFi and fitness center; valet parking is $50/day.</p>
+      </div>
+      <div class="card">
+        <h3>Encore Boston Harbor</h3>
+        <p class="meta">Everett, MA &middot; ~5 min from the office &middot; $379&ndash;$609/night</p>
+        <p data-role="client">A Wynn resort property on the harbor, on the upscale end &mdash; good for VIP visits, not a default pick for everyday trips.</p>
+        <p data-role="staff">From the Vendor List sheet; contact jeff.caldwell@encorebostonharbor.com. Outreach for a corporate rate went out in 2022 &mdash; worth confirming a rate still applies before booking.</p>
+      </div>
+      <div class="card">
+        <h3>Hampton Inn Boston/Cambridge</h3>
+        <p class="meta">Cambridge, MA &middot; ~5 min from the office &middot; $158&ndash;$174/night</p>
+        <p data-role="client">Breakfast is included. A straightforward, moderately priced option close to the office.</p>
+        <p data-role="staff">From the Vendor List sheet; ask for "Lisa" at the property. 2022 outreach for a corporate rate got no response &mdash; confirm current rate before booking.</p>
+      </div>
+      <div class="card">
+        <h3>Holiday Inn Boston &ndash; Bunker Hill Area</h3>
+        <p class="meta">Somerville, MA &middot; ~5 min from the office &middot; $139&ndash;$191/night</p>
+        <p data-role="client">Free onsite parking. Previously used for a TELUS Digital hotel block and conference (Adobe Bootcamp, 2023).</p>
+        <p data-role="staff">Contact: Monica Blake, mblack@dhghotels.com.</p>
+      </div>
+      <div class="card">
+        <h3>AC Hotel by Marriott Boston North</h3>
+        <p class="meta">Medford, MA &middot; ~10 min from the office &middot; $129&ndash;$144/night</p>
+        <p data-role="client">The most budget-friendly of the group, still a reasonable drive from the office.</p>
+      </div>
+      <div class="card">
+        <h3>Residence Inn by Marriott Boston Harbor on Tudor Wharf</h3>
+        <p class="meta">Charlestown, MA &middot; ~10 min from the office &middot; $169&ndash;$400/night</p>
+        <p data-role="client">Kitchen-equipped rooms, a good fit for longer stays.</p>
+        <p data-role="staff">From the Vendor List sheet; ask for "Cassidy" at the property. 2022 outreach for a corporate rate &mdash; confirm before booking.</p>
+      </div>
+      <div class="card skip-card" data-role="staff">
+        <h3>Avoid</h3>
+        <p>La Quinta Inn &amp; Suites Boston Somerville is flagged "No" in the Vendor List, based on prior negative feedback.</p>
+      </div>
+    </div>
+
+    <div class="grid" data-city="vancouver">
+      <div class="empty">No hotel recommendations documented for Vancouver yet.</div>
+    </div>
+
+    <div class="grid" data-city="brazil">
+      <div class="card">
+        <h3><a href="https://www.hilton.com/en/hotels/poaobhh-hilton-porto-alegre/" target="_blank">Hilton Porto Alegre</a></h3>
+        <p class="meta">Rua Olavo Barreto Viana 18 &middot; ~$118 USD (Superior) / ~$175 USD (Executive)</p>
+        <p data-role="client">TELUS Digital's preferred hotel for stays in Porto Alegre; the Executive Room includes access to the 15th-floor Executive Lounge.</p>
+        <p data-role="staff">Corporate account code <strong>3403877</strong>. Contact: Felipe Oliveira. Send credit card authorization to portoalegre.reservations@hilton.com. Note: travelers coming from S&atilde;o Paulo sometimes stay elsewhere instead.</p>
+      </div>
+    </div>
+
+    <div class="grid" data-city="saopaulo">
+      <div class="card">
+        <h3>Meli&aacute; Paulista</h3>
+        <p class="meta">Avenida Paulista, 2181, Consola&ccedil;&atilde;o &middot; preferred hotel</p>
+        <p data-role="client">TELUS Digital's preferred hotel for S&atilde;o Paulo stays, on Avenida Paulista.</p>
+        <p data-role="staff">From the Vendor List sheet. Booking contact listed as reservas.poa@sheraton.com &mdash; that's a Sheraton address on a Meli&aacute; listing, so worth confirming it's current before relying on it.</p>
+      </div>
+      <div class="card skip-card" data-role="staff">
+        <h3>Also available, no confirmed corporate rate</h3>
+        <p>Renaissance S&atilde;o Paulo Hotel (Jardim Paulista, ~$376/night) and Sheraton S&atilde;o Paulo WTC Hotel (~$315/night) &mdash; listed in the Vendor List without a "Yes" recommendation, fine as backups.</p>
+      </div>
+    </div>
+
+    <p class="note" data-role="staff" style="margin-top:4px;">General booking guidance: favor refundable rooms, stay under $250/night for conference or billable client trips, and stick to 3-star and up. Complete a credit card authorization form for any hotel if the traveler doesn't have a TELUS Digital card on file.</p>
+  </section>
+
+  <!-- ACTIVITIES -->
+  <section class="block" data-role="staff client">
+    <h2>Activities</h2>
+    <div class="grid" data-city="cville">
+      <div class="card">
+        <h3><a href="https://www.monticello.org/tours/highlights-tour" target="_blank">Monticello Highlights Tour</a></h3>
+        <p class="meta">Optional team event &middot; 90-minute tour, ~3 hours total with travel</p>
+        <p>Complimentary tour of Thomas Jefferson's historic home, gardens, and grounds, offered free to visiting guests. Less than 15 minutes from the office.</p>
+        <p data-role="staff client">Let your TELUS Digital contact know you're interested at least three business days before arrival; they'll arrange the visit and transportation to and from Monticello. Ask about add-on tours (including the Behind the Scenes Tour) if your group wants more than the Highlights Tour.</p>
+      </div>
+    </div>
+    <div class="grid" data-city="columbus">
+      <div class="card"><h3>Add activity<span class="tag sample">Sample</span></h3><p>Placeholder &mdash; nothing documented yet for Columbus.</p></div>
+    </div>
+    <div class="grid" data-city="durham">
+      <div class="card"><h3>Add activity<span class="tag sample">Sample</span></h3><p>Placeholder &mdash; nothing documented yet for Durham.</p></div>
+    </div>
+    <div class="grid" data-city="boston">
+      <div class="card"><h3><a href="https://www.luckystrikesomerville.com/" target="_blank">Lucky Strike Somerville</a></h3><p>Bowling and lounge; previously used for a TELUS Digital board meeting.</p></div>
+      <div class="card"><h3><a href="https://www.puttshack.com/locations/boston/" target="_blank">Puttshack Boston</a></h3><p>Tech-enhanced mini golf, food and bar on site.</p></div>
+      <div class="card"><h3><a href="https://www.wearespin.com/locations/boston" target="_blank">SPIN Boston</a></h3><p>Ping pong social club with a full bar.</p></div>
+    </div>
+    <div class="grid" data-city="vancouver">
+      <div class="empty">No activities documented for Vancouver yet.</div>
+    </div>
+    <div class="grid" data-city="brazil">
+      <div class="empty">No activities documented for Porto Alegre yet.</div>
+    </div>
+    <div class="grid" data-city="saopaulo">
+      <div class="empty">No activities documented for S&atilde;o Paulo yet.</div>
+    </div>
+  </section>
+
+  <!-- LOCAL VENDORS & EVENT SUPPLIERS (staff only) -->
+  <section class="block" data-role="staff">
+    <h2>Local Vendors &amp; Event Suppliers</h2>
+    <p class="note" style="margin-top:-8px;margin-bottom:14px;">Reference list for planning office events, not visitor recommendations. Pulled from the Vendor List sheet.</p>
+
+    <div class="subgroup" data-city="cville">
+      <p class="subgroup-label">Charlottesville &mdash; personal services &amp; essentials</p>
+      <div class="grid">
+        <div class="card">
+          <p>Names below are from the Vendor List's Essentials category for Charlottesville staff, not vetted for client-facing use.</p>
+          <ul>
+            <li>Auto &amp; mechanic, dental, veterinary, and dry-cleaning contacts are on file &mdash; ask the Office Team for current names and numbers.</li>
+          </ul>
+          <p class="note">This category wasn't fully re-extracted from the sheet this round; flag if you need the complete list.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="boston">
+      <p class="subgroup-label">Boston &mdash; event vendors</p>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li>Silver Tie Servers &mdash; bartending for office events.</li>
+            <li>Kappy's &mdash; alcohol delivery, on-call/pickup available.</li>
+            <li>Simply Serving &mdash; event catering vendor.</li>
+            <li>AIGA Boston, Charles River Watershed Association, The Upward Project &mdash; community partners used for past Boston events.</li>
+          </ul>
+          <p class="note">Drizly is listed in the Vendor List but has shut down; don't use it for new orders.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="columbus"><div class="grid"><div class="empty">No additional local event vendors documented for Columbus beyond the catering picks above.</div></div></div>
+    <div class="subgroup" data-city="durham"><div class="grid"><div class="empty">No additional local event vendors documented for Durham beyond the catering picks above.</div></div></div>
+    <div class="subgroup" data-city="vancouver"><div class="grid"><div class="empty">No local event vendors documented for Vancouver.</div></div></div>
+    <div class="subgroup" data-city="brazil"><div class="grid"><div class="empty">No local event vendors documented for Porto Alegre.</div></div></div>
+    <div class="subgroup" data-city="saopaulo"><div class="grid"><div class="empty">No local event vendors documented for S&atilde;o Paulo.</div></div></div>
+  </section>
+
+  <!-- LOCAL COMMUNITY & RECRUITING PARTNERS (staff only, Vancouver) -->
+  <section class="block" data-role="staff">
+    <h2>Local Community &amp; Recruiting Partners</h2>
+    <p class="note" style="margin-top:-8px;margin-bottom:14px;">Reference list for business development and recruiting outreach, not visitor or event vendor recommendations. Migrated from a Notion "Bucket List" tracker the Vancouver team kept in 2022&ndash;2023; several entries have conflicting or dated status notes, so confirm before reaching out.</p>
+
+    <div class="subgroup" data-city="vancouver">
+      <p class="subgroup-label">Recruiting &amp; schools</p>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><a href="https://www.ubc.ca/" target="_blank">UBC</a> &mdash; University of British Columbia, campuses in Vancouver and Kelowna.</li>
+            <li><a href="https://www.bcit.ca/" target="_blank">BCIT</a> &mdash; British Columbia Institute of Technology, several Metro Vancouver campuses.</li>
+            <li><a href="https://events.sfu.ca/all" target="_blank">SFU</a> &mdash; Simon Fraser University.</li>
+            <li><a href="https://thecdm.ca/" target="_blank">Centre for Digital Media</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="vancouver">
+      <p class="subgroup-label">Professional groups &amp; meetups</p>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><a href="https://pmi.bc.ca/chapter-info" target="_blank">PMI Canadian West Coast</a> &mdash; project management chapter; the tracker lists it as both active and inactive in two separate entries, so check current status.</li>
+            <li><a href="https://www.meetup.com/agile-vancouver/" target="_blank">Agile Vancouver</a></li>
+            <li><a href="https://www.meetup.com/vancouver-digital-project-managers/events/" target="_blank">Vancouver Digital Project Managers</a></li>
+            <li><a href="https://www.meetup.com/productbc/" target="_blank">ProductBC</a></li>
+            <li><a href="https://www.meetup.com/devops-vancouver-bc-canada/" target="_blank">DevOps Vancouver BC Canada</a></li>
+            <li>Van UXR &mdash; UX research meetup, no link on file.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="vancouver">
+      <p class="subgroup-label">Community &amp; potential partners</p>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><a href="https://www.innovatebc.ca/" target="_blank">InnovateBC</a></li>
+            <li><a href="https://creativemornings.com/cities/VAN" target="_blank">Creative Mornings Vancouver</a> &mdash; flagged in the tracker as a chance to feature TELUS Digital design work.</li>
+            <li><a href="https://brainstation.io/" target="_blank">BrainStation</a> &mdash; training and bootcamps; possible co-host for happy hours, hackathons, or office events.</li>
+            <li><a href="https://www.bcafn.ca/" target="_blank">Vancouver Aboriginal Friendship Centre Society</a> &mdash; cultural partner.</li>
+            <li>Black Boys Code &mdash; community partner, no link on file.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="vancouver">
+      <p class="subgroup-label">Local tech media</p>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><a href="https://www.vantechjournal.com/" target="_blank">Vancouver Tech Journal</a> &mdash; also runs a monthly drinks social and a weekly morning coffee; see <a href="https://events.vantechjournal.com/agenda" target="_blank">events.vantechjournal.com/agenda</a>.</li>
+            <li>TechCouver &mdash; local tech media site.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgroup" data-city="cville"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+    <div class="subgroup" data-city="columbus"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+    <div class="subgroup" data-city="durham"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+    <div class="subgroup" data-city="boston"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+    <div class="subgroup" data-city="brazil"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+    <div class="subgroup" data-city="saopaulo"><div class="grid"><div class="empty">This tracker only covers Vancouver.</div></div></div>
+  </section>
+
+  <!-- PROCESS / HOW TO WORK WITH US -->
+  <section class="block" data-role="staff">
+    <h2>Planning Process &amp; Budget</h2>
+    <div class="card">
+      <p><strong>Budget sources</strong> &mdash; a cost center approver (team/exec events), Business Development (client-related events), the Social Impact budget for ERG/community events (DRI: Annie Campbell), or the office Culture Lead budget for office-specific activities.</p>
+      <p><strong>Getting started</strong> &mdash; log a ticket at help.willowtreeapps.com under Office &amp; Admin Request &gt; Events (Client Visits or Internal Meetings), and travel/hotel blocks under Office &amp; Admin Request &gt; Travel. An event isn't confirmed until the ticket is received and approved.</p>
+      <p><strong>General flow</strong> &mdash; confirm budget, assign a DRI and possible dates, log the ticket, connect with an event advisor, then follow the checklist for a client visit, on-site, or internal event through to execution and receipt submission.</p>
+      <p class="note">Travelers receive a per diem (no receipts needed for that), but still need to file an expense report in Workday for other reimbursements.</p>
+    </div>
+  </section>
+
+  <section class="block" data-role="client">
+    <h2>What to Expect</h2>
+    <div class="card">
+      <p>Your TELUS Digital contact will help line up meeting space, meals, and anything else you need while you're here. Groups larger than 20&ndash;25 people are usually best hosted in Charlottesville, since it has the most space.</p>
+    </div>
+  </section>
+
+  <section class="block" data-role="vendor">
+    <h2>How to Work With Us</h2>
+    <div class="card">
+      <p>Coordinate directly with the office contact listed above for order details, timing, and delivery instructions. Most catering requests need 72 hours' notice for groups over 8&ndash;12 people, depending on office.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="footer-note">* Staff email addresses use the firstname.lastname@telusdigital.com pattern referenced in a 2026 internal tooling page; none of these individual addresses were independently confirmed, so double-check before relying on one. ** Brazil office contacts get the same guessed pattern with even less confidence, since facilities@poatek.com suggests those offices may run on a separate operating partner's domain rather than telusdigital.com. Prototype built from TELUS Digital's internal event-planning wikis (Client Visits, Team On-sites, Planning an Event, TELUS Digital Events), the "Our Offices" Confluence page and individual office pages, the Columbus restaurant list from Kyle Jepson, the "Places to Eat (Cville)" Confluence page, the S&atilde;o Paulo office's nearby-places guide, the Travel Reference + Information doc for hotel rates, and the "Vendor List" spreadsheet for additional hotels, restaurants, activities, and event vendors. Cards marked "Sample" are still placeholders pending a real vendor list. Columbus restaurant cuisine/price tags were verified via web search in July 2026; three previously recommended spots (Chapman's Eat Market, Rishi Sushi, Hot Chicken Takeover) have since closed and are flagged accordingly. The Vendor List additions are scoped to TELUS Digital's seven office cities; its much longer list of TELUS discount hotels in other cities (Canada-wide, Manila, Bucharest, Guatemala, San Salvador, and various U.S. conference-travel cities) wasn't pulled in here since those aren't TELUS Digital office locations. A very large Hotel category in that sheet also may not have been captured in full &mdash; worth a spot check against the source if a specific hotel seems missing.</p>
+  <div class="footer-bar">
+    <span class="footer-logo">
+      <svg width="16" height="16" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="#66CC00">
+          <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z"/>
+          <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(72 17 17)"/>
+          <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(144 17 17)"/>
+          <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(216 17 17)"/>
+          <path d="M17 2 C22 9, 22 17, 17 24 C12 17, 12 9, 17 2 Z" transform="rotate(288 17 17)"/>
+        </g>
+      </svg>
+      <span class="footer-wordmark">telus<span> digital</span></span>
+      <span>&mdash; Internal Use</span>
+    </span>
+    <span>Internal prototype &mdash; not for external distribution</span>
+  </div>
+</footer>
+
+<script>
+  const state = { role: 'staff', city: 'cville' };
+
+  function render(){
+    document.querySelectorAll('.pill').forEach(b=>{
+      b.classList.toggle('active', b.dataset.setRole === state.role);
+    });
+    document.querySelectorAll('.city-tab').forEach(b=>{
+      b.classList.toggle('active', b.dataset.setCity === state.city);
+    });
+    document.querySelectorAll('[data-role]').forEach(el=>{
+      const roles = el.dataset.role.split(' ');
+      el.style.display = roles.includes(state.role) ? '' : 'none';
+    });
+    document.querySelectorAll('[data-city]').forEach(el=>{
+      el.style.display = el.dataset.city === state.city ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('[data-set-role]').forEach(b=>{
+    b.addEventListener('click', ()=>{ state.role = b.dataset.setRole; render(); });
+  });
+  document.querySelectorAll('[data-set-city]').forEach(b=>{
+    b.addEventListener('click', ()=>{ state.city = b.dataset.setCity; render(); });
+  });
+
+  render();
+</script>
+
+</body>
+</html>
