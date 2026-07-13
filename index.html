@@ -225,6 +225,16 @@
     padding:2px 14px;
   }
   details.dropdown-group:last-child{margin-bottom:0;}
+  /* Lay dropdown groups out left-to-right in a responsive grid */
+  .subgroup:has(> details.dropdown-group){
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:10px;
+    align-items:start;
+  }
+  .subgroup:has(> details.dropdown-group) > .subgroup-label,
+  .subgroup:has(> details.dropdown-group) > .note{grid-column:1/-1;}
+  .subgroup:has(> details.dropdown-group) > details.dropdown-group{margin-bottom:0;}
   details.dropdown-group summary{
     cursor:pointer;
     font-size:13px;
